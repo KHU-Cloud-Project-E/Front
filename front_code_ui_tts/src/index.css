@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.btn {
+  @apply rounded-full px-7 py-2.5  text-[#FFF] bg-[#CF69FF] font-medium;
+}
