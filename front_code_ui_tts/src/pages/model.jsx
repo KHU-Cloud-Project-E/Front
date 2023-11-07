@@ -28,6 +28,9 @@ function Model(){
     return(
         <div className={styles.modelBackground}>
             <div className={styles.models}>
+                <b className={styles.modelsH}>
+                    <h2>모델 리스트</h2>
+                </b>
                 {components.map(component =>(
                     <ModelComponent modelid={component.id} description={component.description}/>
                 ))}
