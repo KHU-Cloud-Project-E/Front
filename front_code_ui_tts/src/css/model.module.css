@@ -37,3 +37,15 @@
     margin-left: 2rem;
     font-size: 1.5rem;
 }
+
+.modelImgBox {
+    display: flex;
+    justify-content: flex-end;
+    width: -webkit-fill-available;
+    margin-right: 2rem;
+    height: 42%;
+}
+
+.modelBtnImg {
+    margin-left: 1rem;
+}
