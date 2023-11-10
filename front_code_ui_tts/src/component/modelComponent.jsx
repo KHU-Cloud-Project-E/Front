@@ -1,26 +1,33 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import styles from "../css/model.module.css";
 import clipboardCopy from "clipboard-copy";
+import {Tooltip} from 'react-tooltip';
 
-const ModelComponent = ({key, description})=>{
+const ModelComponent = ({id, description})=>{
 
     const handleCopyToClipboard = () => {
-        clipboardCopy(key);
-        alert("모델 id가 클립보드에 카피되었습니다.");
+        clipboardCopy(id);
+        alert(`모델 id(${id})가 클립보드에 카피되었습니다.`);
     }
 
     return(
         <div className={styles.model}>
             <b className={styles.modelText}>{description}</b>
             <div className={styles.modelImgBox}>
-                <button>
+                <Link to={`/model/edit/${id}`} data-tooltip-id="edit-tooltip" data-tooltip-content="edit model config">
                     <img className={styles.modelBtnImg} src="img/edit.png"/>
-                </button>
-                <button onClick={handleCopyToClipboard} >
+                    <Tooltip id="edit-tooltip"/>
+                </Link>
+                <button data-tooltip-id="copy-tooltip" data-tooltip-content="copy model id" 
+                onClick={handleCopyToClipboard} >
                     <img className={styles.modelBtnImg} src="img/copy.png"/>
+                    <Tooltip id="copy-tooltip"/>
                 </button>
-                <button>
+                <button data-tooltip-id="delete-tooltip" data-tooltip-content="delete model"
+                data-tooltip-variant="error">
                     <img className={styles.modelBtnImg} src="img/delete.png"/>
+                    <Tooltip id="delete-tooltip"/>
                 </button>
             </div>
         </div>

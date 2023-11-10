@@ -1,0 +1,27 @@
+.toggleSwitch{
+    width: 60px;
+    height: 30px;
+    background-color: #ddd;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+.slider{
+    width: 26px;
+    height: 26px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+}
+
+.toggled {
+    background-color: #BB29FF;
+  }
+  
+  .toggled .slider {
+    transform: translateX(30px);
+  }

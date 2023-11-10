@@ -6,6 +6,7 @@ import SingIn from './pages/singin'
 import Upload from './pages/upload'
 import Model from './pages/model'
 import AppLayout from './AppLayout'
+import ModelEdit from './pages/modelEdit'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
         <Route path='/singin' element={<SingIn />} />
         <Route path='/model' element={<Model />} />
         <Route path='/upload' element={<Upload />} />
+        <Route path='/model/edit/:id' element={<ModelEdit />} />
       </Route>
     </>
   )

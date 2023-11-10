@@ -32,7 +32,7 @@ function Model(){
                     <h2>모델 리스트</h2>
                 </b>
                 {components.map(component =>(
-                    <ModelComponent key={component.id} description={component.description}/>
+                    <ModelComponent id={component.id} description={component.description}/>
                 ))}
             </div>
         </div>
