@@ -41,7 +41,7 @@
 .modelImgBox {
     display: flex;
     justify-content: flex-end;
-    width: -webkit-fill-available;
+    width: 100%;
     margin-right: 2rem;
     height: 42%;
 }

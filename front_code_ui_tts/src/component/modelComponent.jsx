@@ -8,7 +8,7 @@ const ModelComponent = ({id, description})=>{
 
     const handleCopyToClipboard = () => {
         clipboardCopy(id);
-        alert(`모델 id(${id})가 클립보드에 카피되었습니다.`);
+        alert(`모델 id (${id})가 클립보드에 카피되었습니다.`);
     }
 
     return(
