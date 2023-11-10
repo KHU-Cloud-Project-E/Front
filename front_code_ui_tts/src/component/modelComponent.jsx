@@ -14,10 +14,7 @@ const ModelComponent = ({key, description})=>{
             <b className={styles.modelText}>{description}</b>
             <div className={styles.modelImgBox}>
                 <button>
-                    <img className={styles.modelBtnImg} src="img/share.png"/>
-                </button>
-                <button>
-                    <img className={styles.modelBtnImg} src="img/refresh.png"/>
+                    <img className={styles.modelBtnImg} src="img/edit.png"/>
                 </button>
                 <button onClick={handleCopyToClipboard} >
                     <img className={styles.modelBtnImg} src="img/copy.png"/>
