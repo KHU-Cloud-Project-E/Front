@@ -96,6 +96,29 @@
     color:gray
 }
 
+.modelPictureBox{
+    outline: 3px dashed gray;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    margin-left: 1rem;
+    border-radius: 1rem;
+    height: 12rem;
+    width: 10rem;
+    background-color: #EFEFEF;
+}
+
+.modelPictureCross{
+    align-self: center;
+    margin-bottom: 1rem;
+}
+
+.modelPictureText{
+    font-size: small;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
 .sepBlock {
     margin-top: 1.5rem;
     align-self: center;

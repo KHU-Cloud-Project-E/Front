@@ -5,6 +5,7 @@ import styles from '../css/modelEdit.module.css';
 import clipboardCopy from "clipboard-copy";
 import { Tooltip } from "react-tooltip";
 import ToggleSwitch from "../component/toggleSwitch";
+import CrossElement from "../component/crossElement";
 
 const testJson = {
     "status": 200, // 상태
@@ -93,6 +94,14 @@ function ModelEdit(){
                         </div>
                         <div className={styles.modelImgBox}>
                             <ToggleSwitch isToggled={isShare} onClick={handleShareToggle} />
+                        </div>
+                    </div>
+                    <div className={styles.modelIdBox}>
+                        <div className={styles.modelPictureBox}>
+                            <div className={styles.modelPictureCross}>
+                                <CrossElement />
+                            </div>
+                            <p className={styles.modelPictureText}>사진을 등록해 주세요</p>
                         </div>
                     </div>
                 </div>
