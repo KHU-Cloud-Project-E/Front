@@ -4,15 +4,16 @@ import { useParams } from "react-router-dom";
 import styles from '../css/modelEdit.module.css';
 import clipboardCopy from "clipboard-copy";
 import { Tooltip } from "react-tooltip";
+import ToggleSwitch from "../component/toggleSwitch";
 
 const testJson = {
-    "status": 200,
+    "status": 200, // 상태
     "message": "success",
-    "id": 4123,
-    "description": "test1",
-    "share" : false,
-    "ficture_src" : "",
-    "detail" : "this is test model"
+    "id": 4123, //모델의 아이디
+    "description": "test1", //모델의 이름
+    "share" : false, //공유옵션 활성화 여부
+    "ficture_src" : "", //모델 사진 경로
+    "detail" : "this is test model" //모델에 대한 상세 설명
   };
 
 
@@ -21,11 +22,20 @@ function ModelEdit(){
     const description = testJson.description;
 
     const [isEditing, setIsEditing] = useState(false);
+    const [isShare, setIsShare] = useState(testJson.share)
     const [editName, setEditName] = useState(description);
 
     const handleCopyToClipboard = () => {
         clipboardCopy(modelId);
         alert(`모델 id (${modelId})가 클립보드에 카피되었습니다.`);
+    }
+
+    const handleShareToggle = () => {
+        if(isShare === true){ //공유 설정이 되어있을 때
+            setIsShare(false);
+        }else{ //공유설정이 되어있지 않을 때
+            setIsShare(true);
+        }
     }
 
     return(
@@ -74,6 +84,15 @@ function ModelEdit(){
                                     <img className={styles.modelBtnImg} src="/img/refresh.png"/>
                                     <Tooltip id="refresh-tooltip"/>
                                 </button>
+                        </div>
+                    </div>
+                    <hr className={styles.sepBlock}/>
+                    <div className={styles.modelIdBox}>
+                        <div className={styles.modelIdInnerBox}>
+                            <p className={styles.modelIdNameFont}>모델 공유 설정</p>
+                        </div>
+                        <div className={styles.modelImgBox}>
+                            <ToggleSwitch isToggled={isShare} onClick={handleShareToggle} />
                         </div>
                     </div>
                 </div>

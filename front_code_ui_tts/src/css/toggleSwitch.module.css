@@ -22,6 +22,6 @@
     background-color: #BB29FF;
   }
   
-  .toggled .slider {
+  .toggledslider {
     transform: translateX(30px);
   }

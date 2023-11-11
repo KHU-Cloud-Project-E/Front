@@ -3,9 +3,9 @@ import styles from "../css/toggleSwitch.module.css"
 
 const ToggleSwitch = ({isToggled, onClick}) => {
     return(
-        <div className={`${styles.toggleSwitch} ${isToggled ? 'toggled' : ''}`} 
+        <div className={`${styles.toggleSwitch} ${isToggled ? styles.toggled : ''}`} 
         onClick={onClick}>
-            <div className={`${styles.slider} ${isToggled ? 'toggled' : ''}`} />
+            <div className={`${styles.slider} ${isToggled ? styles.toggledslider : ''}`} />
         </div>
     );
 }
