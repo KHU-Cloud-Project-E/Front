@@ -9,6 +9,7 @@ export default function Header() {
     { name: 'Help', href: '/help' },
     { name: 'Donation', href: '/donation3' },
     { name: 'Sing In', href: '/singin' },
+    { name: 'Gallery', href: '/gallery' },
   ]
   return (
     <header className='px-2 py-2 flex justify-between items-center bg-[#BB29FF] text-[#DDD]'>
