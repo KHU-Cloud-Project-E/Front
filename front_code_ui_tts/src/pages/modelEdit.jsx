@@ -7,6 +7,7 @@ import { Tooltip } from "react-tooltip";
 import ToggleSwitch from "../component/toggleSwitch";
 import CrossElement from "../component/crossElement";
 import GeneralButton from "../component/generalButton";
+import OverlayWarning from "../component/overlay/overlayWarning";
 
 const testJson = {
     "status": 200, // 상태
@@ -28,6 +29,7 @@ function ModelEdit(){
     const [isShare, setIsShare] = useState(testJson.share);
     const [editName, setEditName] = useState(description);
     const [editDetail, setEditDetail] = useState(detail);
+    const [overlayShare, setOverlayShare] = useState(false);
 
     const handleCopyToClipboard = () => {
         clipboardCopy(modelId);
@@ -38,9 +40,19 @@ function ModelEdit(){
         if(isShare === true){ //공유 설정이 되어있을 때
             setIsShare(false);
         }else{ //공유설정이 되어있지 않을 때
-            setIsShare(true);
+            setOverlayShare(true);
+            //setIsShare(true);
         }
     };
+
+    const overlayShareCancel = () => {
+        setOverlayShare(false);
+    }
+
+    const overlayShareConfirm = () => {
+        setIsShare(true);
+        setOverlayShare(false);
+    }
 
     const confirmButtonOnClick = () => {
         
@@ -124,6 +136,9 @@ function ModelEdit(){
                     </div>
                 </div>
             </div>
+            <OverlayWarning isDisplay={overlayShare}
+            clickCancle={overlayShareCancel}
+            clickConfirm={overlayShareConfirm} ></OverlayWarning>
         </div>
     );
 
