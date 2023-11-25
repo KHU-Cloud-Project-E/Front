@@ -1,11 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import styles from '../css/modelEdit.module.css';
 import clipboardCopy from "clipboard-copy";
 import { Tooltip } from "react-tooltip";
 import ToggleSwitch from "../component/toggleSwitch";
 import CrossElement from "../component/crossElement";
+import GeneralButton from "../component/generalButton";
+import OverlayWarning from "../component/overlay/overlayWarning";
 
 const testJson = {
     "status": 200, // 상태
@@ -15,29 +18,108 @@ const testJson = {
     "share" : false, //공유옵션 활성화 여부
     "ficture_src" : "", //모델 사진 경로
     "detail" : "this is test model" //모델에 대한 상세 설명
-  };
+};
+
+const warnTexts = [
+    "모델을 공유함으로써 발생할 수 있는 모든 저작권에 대한 법적 책임은 본인에게 있음을 동의한다.",
+    "본인이 업로드한 모델을 불특정 다수가 사용할 수 있음을 인지 했고, 이로인해 발생할 수 있는 모든 문제에 대한 책임은 본인에게 있음을 동의한다."
+];
+
+const warnlen = warnTexts.length;
+
+const filledFalse = Array(warnlen).fill(false);
+
+const WarnContent = ({warnText, idx, checked, onChange}) => {
+    return(
+        <div className={styles.warnContent}>
+            <div className={styles.warnContentTextBox}>
+                <p>{warnText}</p>
+            </div>
+            <div className={styles.warnContentCkeckbox}>
+                <label>
+                    <input 
+                    type="checkbox"
+                    checked={checked}
+                    onChange={()=>{onChange(idx)}}
+                    />
+                    <div className={styles.icon}>
+                        {checked ? <MdCheckBox className={styles.iconChecked}/> : <MdCheckBoxOutlineBlank />}
+                    </div>
+                </label>
+            </div>
+        </div>
+    );
+}
 
 
 function ModelEdit(){
     let modelId = useParams().id;
     const description = testJson.description;
+    const detail = testJson.detail;
 
     const [isEditing, setIsEditing] = useState(false);
-    const [isShare, setIsShare] = useState(testJson.share)
+    const [isShare, setIsShare] = useState(testJson.share);
     const [editName, setEditName] = useState(description);
+    //디테일 데이터 저장
+    const [editDetail, setEditDetail] = useState(detail);
+    //공유 옵션 활성화에 대한 경고 오버레이
+    const [overlayShare, setOverlayShare] = useState(false);
+    //약관 동의 데이터를 저장
+    const [warnChecked, setWarnChecked] = useState(filledFalse);
+    //id refresh에 대한 경고 오버레이
+    const [overlayId, setOverlayId] = useState(false);
 
     const handleCopyToClipboard = () => {
         clipboardCopy(modelId);
         alert(`모델 id (${modelId})가 클립보드에 카피되었습니다.`);
-    }
+    };
 
     const handleShareToggle = () => {
         if(isShare === true){ //공유 설정이 되어있을 때
             setIsShare(false);
         }else{ //공유설정이 되어있지 않을 때
+            setWarnChecked([...filledFalse])
+            setOverlayShare(true);
+            //setIsShare(true);
+        }
+    };
+
+    //공유 경고 오버레이 취소
+    const overlayShareCancel = () => {
+        setOverlayShare(false);
+    }
+
+    //공유 경고 오버레이 확인
+    const overlayShareConfirm = () => {
+        let allSure = true;
+        warnChecked.map(ch => {
+            if(ch === false){
+                allSure = false;
+            }
+        })
+        if(allSure){
             setIsShare(true);
+            setOverlayShare(false);
+        }
+        else{
+            alert("모든 약관에 동의해 주세요.");
         }
     }
+
+    const overlayIdCancel = () => {
+        setOverlayId(false);
+    }
+
+    const overlayIdConfirm = () => {
+        setOverlayId(false);
+
+        alert("ID가 재할당 되었습니다.");
+    }
+
+    //맨 밑의 저장 버튼
+    const confirmButtonOnClick = () => {
+        
+    };
 
     return(
         <div className={styles.modelBackground}>
@@ -81,7 +163,7 @@ function ModelEdit(){
                         <button data-tooltip-id="refresh-tooltip" 
                                 data-tooltip-content="refresh model id"  
                                 data-tooltip-variant="warning"
-                                onClick={(e) => {}}>
+                                onClick={() => {setOverlayId(true)}}>
                                     <img className={styles.modelBtnImg} src="/img/refresh.png"/>
                                     <Tooltip id="refresh-tooltip"/>
                                 </button>
@@ -96,16 +178,52 @@ function ModelEdit(){
                             <ToggleSwitch isToggled={isShare} onClick={handleShareToggle} />
                         </div>
                     </div>
-                    <div className={styles.modelIdBox}>
+                    <div className={styles.modelShareBox}>
                         <div className={styles.modelPictureBox}>
                             <div className={styles.modelPictureCross}>
                                 <CrossElement />
                             </div>
                             <p className={styles.modelPictureText}>사진을 등록해 주세요</p>
                         </div>
+                        <div className={styles.modelDetailBox}>
+                            <textarea
+                            className={styles.modelDetailText}
+                            value={editDetail}
+                            placeholder="모델에 대한 자세한 설명을 적어주세요."
+                            onChange={(e)=>{setEditDetail(e.target.value)}}
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.modelConfirmButtonBox}>
+                        <GeneralButton text={"저장"} onClick={()=>{confirmButtonOnClick()}} />
                     </div>
                 </div>
             </div>
+            <OverlayWarning isDisplay={overlayShare}
+            clickCancle={overlayShareCancel}
+            clickConfirm={overlayShareConfirm} >
+                <div className={styles.warnContentBox}>
+                    {warnTexts.map((wtext, idx) => (
+                        <WarnContent warnText={wtext} 
+                        idx={idx} 
+                        checked={warnChecked[idx]}
+                        onChange={(index)=>{
+                            setWarnChecked((prevWarn) => {
+                                const tempWarn = [...prevWarn];
+                                tempWarn[index] = !tempWarn[index];
+                                return [...tempWarn]});
+                        }}
+                        />
+                    ))}
+                </div>
+            </OverlayWarning>
+            <OverlayWarning isDisplay={overlayId}
+            clickCancle={overlayIdCancel}
+            clickConfirm={overlayIdConfirm}>
+                <div className={styles.warnIdBox}>
+                모델 id를 재발급 받으시게 되면 기존에 해당 모델을 등록하여 사용하고 계시던 모든 계정에서 해당 모델이 사용 불가능하게 되며 새롭게 발급받은 id로 재등록 해주셔야 합니다. 
+                </div>
+            </OverlayWarning>
         </div>
     );
 
