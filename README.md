@@ -1,2 +1,2 @@
 # Front
-Pages-> first page, login page, model upload page
+Pages-> All pages have been created, only integration has to be done. Once get the api's from backend
