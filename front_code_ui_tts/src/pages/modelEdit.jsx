@@ -6,6 +6,7 @@ import clipboardCopy from "clipboard-copy";
 import { Tooltip } from "react-tooltip";
 import ToggleSwitch from "../component/toggleSwitch";
 import CrossElement from "../component/crossElement";
+import GeneralButton from "../component/generalButton";
 
 const testJson = {
     "status": 200, // 상태
@@ -31,7 +32,7 @@ function ModelEdit(){
     const handleCopyToClipboard = () => {
         clipboardCopy(modelId);
         alert(`모델 id (${modelId})가 클립보드에 카피되었습니다.`);
-    }
+    };
 
     const handleShareToggle = () => {
         if(isShare === true){ //공유 설정이 되어있을 때
@@ -39,7 +40,11 @@ function ModelEdit(){
         }else{ //공유설정이 되어있지 않을 때
             setIsShare(true);
         }
-    }
+    };
+
+    const confirmButtonOnClick = () => {
+        
+    };
 
     return(
         <div className={styles.modelBackground}>
@@ -110,6 +115,9 @@ function ModelEdit(){
                             value={editDetail}
                             />
                         </div>
+                    </div>
+                    <div className={styles.modelConfirmButtonBox}>
+                        <GeneralButton text={"확인"} onClick={()=>{confirmButtonOnClick()}} />
                     </div>
                 </div>
             </div>

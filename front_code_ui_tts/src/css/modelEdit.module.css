@@ -141,6 +141,11 @@
     float: right;
 }
 
+.modelConfirmButtonBox{
+    align-self: center;
+    margin: 2rem;
+}
+
 .sepBlock {
     margin-top: 1.5rem;
     align-self: center;
