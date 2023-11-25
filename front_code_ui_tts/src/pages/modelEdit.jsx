@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import styles from '../css/modelEdit.module.css';
 import clipboardCopy from "clipboard-copy";
 import { Tooltip } from "react-tooltip";
@@ -35,11 +36,16 @@ const WarnContent = ({warnText, idx, checked, onChange}) => {
                 <p>{warnText}</p>
             </div>
             <div className={styles.warnContentCkeckbox}>
-                <input 
-                type="checkbox"
-                checked={checked}
-                onChange={()=>{onChange(idx)}}
-                />
+                <label>
+                    <input 
+                    type="checkbox"
+                    checked={checked}
+                    onChange={()=>{onChange(idx)}}
+                    />
+                    <div className={styles.icon}>
+                        {checked ? <MdCheckBox className={styles.iconChecked}/> : <MdCheckBoxOutlineBlank />}
+                    </div>
+                </label>
             </div>
         </div>
     );
@@ -54,9 +60,14 @@ function ModelEdit(){
     const [isEditing, setIsEditing] = useState(false);
     const [isShare, setIsShare] = useState(testJson.share);
     const [editName, setEditName] = useState(description);
+    //디테일 데이터 저장
     const [editDetail, setEditDetail] = useState(detail);
+    //공유 옵션 활성화에 대한 경고 오버레이
     const [overlayShare, setOverlayShare] = useState(false);
+    //약관 동의 데이터를 저장
     const [warnChecked, setWarnChecked] = useState(filledFalse);
+    //id refresh에 대한 경고 오버레이
+    const [overlayId, setOverlayId] = useState(false);
 
     const handleCopyToClipboard = () => {
         clipboardCopy(modelId);
@@ -67,20 +78,45 @@ function ModelEdit(){
         if(isShare === true){ //공유 설정이 되어있을 때
             setIsShare(false);
         }else{ //공유설정이 되어있지 않을 때
+            setWarnChecked([...filledFalse])
             setOverlayShare(true);
             //setIsShare(true);
         }
     };
 
+    //공유 경고 오버레이 취소
     const overlayShareCancel = () => {
         setOverlayShare(false);
     }
 
+    //공유 경고 오버레이 확인
     const overlayShareConfirm = () => {
-        setIsShare(true);
-        setOverlayShare(false);
+        let allSure = true;
+        warnChecked.map(ch => {
+            if(ch === false){
+                allSure = false;
+            }
+        })
+        if(allSure){
+            setIsShare(true);
+            setOverlayShare(false);
+        }
+        else{
+            alert("모든 약관에 동의해 주세요.");
+        }
     }
 
+    const overlayIdCancel = () => {
+        setOverlayId(false);
+    }
+
+    const overlayIdConfirm = () => {
+        setOverlayId(false);
+
+        alert("ID가 재할당 되었습니다.");
+    }
+
+    //맨 밑의 저장 버튼
     const confirmButtonOnClick = () => {
         
     };
@@ -127,7 +163,7 @@ function ModelEdit(){
                         <button data-tooltip-id="refresh-tooltip" 
                                 data-tooltip-content="refresh model id"  
                                 data-tooltip-variant="warning"
-                                onClick={(e) => {}}>
+                                onClick={() => {setOverlayId(true)}}>
                                     <img className={styles.modelBtnImg} src="/img/refresh.png"/>
                                     <Tooltip id="refresh-tooltip"/>
                                 </button>
@@ -179,6 +215,13 @@ function ModelEdit(){
                         }}
                         />
                     ))}
+                </div>
+            </OverlayWarning>
+            <OverlayWarning isDisplay={overlayId}
+            clickCancle={overlayIdCancel}
+            clickConfirm={overlayIdConfirm}>
+                <div className={styles.warnIdBox}>
+                모델 id를 재발급 받으시게 되면 기존에 해당 모델을 등록하여 사용하고 계시던 모든 계정에서 해당 모델이 사용 불가능하게 되며 새롭게 발급받은 id로 재등록 해주셔야 합니다. 
                 </div>
             </OverlayWarning>
         </div>

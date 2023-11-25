@@ -3,9 +3,6 @@ import styles from "./css/Warning.module.css"
 import GeneralButton from "../generalButton";
 
 const OverlayWarning = ({children, clickCancle, clickConfirm, isDisplay}) => {
-    const basicStyle = {
-        "display" : isDisplay?"block":"none"
-    };
 
     return (
         <div className={`${styles.overlaybackground} ${isDisplay?styles.warningon:styles.warningoff}`}>
