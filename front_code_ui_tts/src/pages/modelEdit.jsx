@@ -24,16 +24,22 @@ const warnTexts = [
     "본인이 업로드한 모델을 불특정 다수가 사용할 수 있음을 인지 했고, 이로인해 발생할 수 있는 모든 문제에 대한 책임은 본인에게 있음을 동의한다."
 ];
 
-const filledFalse = Array(warnTexts.length).fill(false);
+const warnlen = warnTexts.length;
 
-const WarnContent = ({warnText}) => {
+const filledFalse = Array(warnlen).fill(false);
+
+const WarnContent = ({warnText, idx, checked, onChange}) => {
     return(
         <div className={styles.warnContent}>
             <div className={styles.warnContentTextBox}>
                 <p>{warnText}</p>
             </div>
             <div className={styles.warnContentCkeckbox}>
-
+                <input 
+                type="checkbox"
+                checked={checked}
+                onChange={()=>{onChange(idx)}}
+                />
             </div>
         </div>
     );
@@ -161,8 +167,17 @@ function ModelEdit(){
             clickCancle={overlayShareCancel}
             clickConfirm={overlayShareConfirm} >
                 <div className={styles.warnContentBox}>
-                    {warnTexts.map(wtext => (
-                        <WarnContent warnText={wtext}/>
+                    {warnTexts.map((wtext, idx) => (
+                        <WarnContent warnText={wtext} 
+                        idx={idx} 
+                        checked={warnChecked[idx]}
+                        onChange={(index)=>{
+                            setWarnChecked((prevWarn) => {
+                                const tempWarn = [...prevWarn];
+                                tempWarn[index] = !tempWarn[index];
+                                return [...tempWarn]});
+                        }}
+                        />
                     ))}
                 </div>
             </OverlayWarning>

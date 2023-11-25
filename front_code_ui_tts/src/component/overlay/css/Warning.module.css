@@ -46,8 +46,8 @@
 
 .warningbox{
     position: absolute;
-    width: 60vw;
-    height: 60vh;
+    width: 50rem;
+    height: 35rem;
     background-color: #BB29FF;
     border-radius: 1rem;
     top: 50%;
