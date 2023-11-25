@@ -8,6 +8,7 @@ import Model from './pages/model'
 import AppLayout from './AppLayout'
 import ModelEdit from './pages/modelEdit'
 import Gallery from './pages/gallery'
+import Detail from './pages/detail'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
         <Route path='/upload' element={<Upload />} />
         <Route path='/model/edit/:id' element={<ModelEdit />} />
         <Route path='/gallery' element={<Gallery />} />
+        <Route path='/detail/:id' element={<Detail />} />
       </Route>
     </>
   )

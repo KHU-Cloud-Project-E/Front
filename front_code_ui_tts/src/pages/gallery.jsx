@@ -1,44 +1,81 @@
 import React, { useState } from 'react';
-import { Link, Routes, Route, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../css/gallery.css';
+
+const testJson = {
+  "status": 200,
+  "message": "success",
+  "count": 9,
+  "components": [
+    {
+      "id" : 1,
+      "src": 'img/person1.png',
+    },
+    {
+      "id" : 2,
+      "src": 'img/person2.png', 
+    },
+    {
+      "id" : 3,
+      "src": 'img/person3.png', 
+    },
+    {
+      "id" : 4,
+      "src": 'img/person1.png', 
+    },
+    {
+      "id" : 5,
+      "src": 'img/person2.png', 
+    },
+    {
+      "id" : 6,
+      "src": 'img/person3.png', 
+    },
+    {
+      "id" : 7,
+      "src": 'img/person1.png', 
+    },
+    {
+      "id" : 8,
+      "src": 'img/person2.png', 
+    },
+    {
+      "id" : 9,
+      "src": 'img/person3.png', 
+    }
+  ]
+};
 
 function Gallery() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [images, setImages] = useState(testJson.components);
+  let navigate = useNavigate();
 
-  const [images, setImages] = useState([
-  ]);
+  const handleImageClick = (component) => {
+    navigate(`/detail/${component.id}`, { state: { imageSrc: component.src } });
+  };
 
   return (
-    <div className="gallery">
-      <input
-        className="search-bar"
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-
+    <div className="gallery-container">
+      <div className="search-container">
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Search Model..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="image-grid">
-        {images.map((image) => (
-          <Link key={image.id} to={`/gallery/detail/${image.id}`}>
-            <div className="image-item">
-              <img src={image.src} alt={image.alt} />
-            </div>
-          </Link>
+        {images.map((component) => (
+          <div key={component.id} className="image-card" onClick={() => handleImageClick(component)}>
+            <img src={component.src} alt={component.alt} className="model-image" />
+            <div className="description">{component.description}</div>
+          </div>
         ))}
       </div>
-
-      <Routes>
-        <Route path="detail/:id" element={<DetailPage />} />
-      </Routes>
     </div>
   );
-}
-
-function DetailPage() {
-  const { id } = useParams();
-
-  return <div className="detail-page">Detail page for item {id}</div>;
 }
 
 export default Gallery;
