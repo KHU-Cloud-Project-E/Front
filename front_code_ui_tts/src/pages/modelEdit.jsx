@@ -111,13 +111,16 @@ function ModelEdit(){
                             <p className={styles.modelPictureText}>사진을 등록해 주세요</p>
                         </div>
                         <div className={styles.modelDetailBox}>
-                            <input type="text"
+                            <textarea
+                            className={styles.modelDetailText}
                             value={editDetail}
+                            placeholder="모델에 대한 자세한 설명을 적어주세요."
+                            onChange={(e)=>{setEditDetail(e.target.value)}}
                             />
                         </div>
                     </div>
                     <div className={styles.modelConfirmButtonBox}>
-                        <GeneralButton text={"확인"} onClick={()=>{confirmButtonOnClick()}} />
+                        <GeneralButton text={"저장"} onClick={()=>{confirmButtonOnClick()}} />
                     </div>
                 </div>
             </div>

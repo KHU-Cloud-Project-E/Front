@@ -32,7 +32,8 @@ const GeneralButton = ({text, color, textColor, onClick}) => {
         width: '9rem',
         height: '3rem',
         'border-radius': '3rem',
-        'font-size': 'larger'
+        'font-size': 'larger',
+        'font-weight': 'bold'
     }
     
     return(

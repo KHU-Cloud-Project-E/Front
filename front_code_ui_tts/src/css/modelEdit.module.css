@@ -39,7 +39,7 @@
 
 .editBox {
     width: 95%;
-    height: 80%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-self: center;
@@ -139,6 +139,13 @@
     padding: 1rem;
     justify-self: end;
     float: right;
+}
+
+.modelDetailText{
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
 }
 
 .modelConfirmButtonBox{
