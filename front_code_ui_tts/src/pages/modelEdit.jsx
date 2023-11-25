@@ -21,10 +21,12 @@ const testJson = {
 function ModelEdit(){
     let modelId = useParams().id;
     const description = testJson.description;
+    const detail = testJson.detail;
 
     const [isEditing, setIsEditing] = useState(false);
-    const [isShare, setIsShare] = useState(testJson.share)
+    const [isShare, setIsShare] = useState(testJson.share);
     const [editName, setEditName] = useState(description);
+    const [editDetail, setEditDetail] = useState(detail);
 
     const handleCopyToClipboard = () => {
         clipboardCopy(modelId);
@@ -96,12 +98,17 @@ function ModelEdit(){
                             <ToggleSwitch isToggled={isShare} onClick={handleShareToggle} />
                         </div>
                     </div>
-                    <div className={styles.modelIdBox}>
+                    <div className={styles.modelShareBox}>
                         <div className={styles.modelPictureBox}>
                             <div className={styles.modelPictureCross}>
                                 <CrossElement />
                             </div>
                             <p className={styles.modelPictureText}>사진을 등록해 주세요</p>
+                        </div>
+                        <div className={styles.modelDetailBox}>
+                            <input type="text"
+                            value={editDetail}
+                            />
                         </div>
                     </div>
                 </div>

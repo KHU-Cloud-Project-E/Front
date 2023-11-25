@@ -78,6 +78,16 @@
     width: auto;
 }
 
+.modelShareBox {
+    display: grid;
+    margin-top: 1.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    height: fit-content;
+    width: auto;
+    grid-template-columns: 1fr 3fr;
+}
+
 .modelIdInnerBox {
     display: flex;
     flex-direction: row;
@@ -106,6 +116,8 @@
     height: 12rem;
     width: 10rem;
     background-color: #EFEFEF;
+    float: left;
+    align-self: center;
 }
 
 .modelPictureCross{
@@ -117,6 +129,16 @@
     font-size: small;
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+.modelDetailBox{
+    outline: 3px solid black;
+    height: 18rem;
+    width: 95%;
+    border-radius: 1rem;
+    padding: 1rem;
+    justify-self: end;
+    float: right;
 }
 
 .sepBlock {
