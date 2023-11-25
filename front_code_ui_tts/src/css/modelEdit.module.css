@@ -153,6 +153,36 @@
     margin: 2rem;
 }
 
+.warnContentBox{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+}
+
+.warnContent{
+    width: auto;
+    height: 8rem;
+    display: grid;
+    grid-template-columns: 8fr 1fr;
+}
+
+.warnContentTextBox{
+    height : 90%;
+    width: auto;
+    float: left;
+    background-color: #EAEAEA;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.warnContentCkeckbox{
+    height: 90%;
+    width: auto;
+    float: right;
+}
+
 .sepBlock {
     margin-top: 1.5rem;
     align-self: center;

@@ -8,7 +8,7 @@ const OverlayWarning = ({children, clickCancle, clickConfirm, isDisplay}) => {
     };
 
     return (
-        <div className={styles.overlaybackground} style={basicStyle}>
+        <div className={`${styles.overlaybackground} ${isDisplay?styles.warningon:styles.warningoff}`}>
             <div className={styles.fog}>
             </div>
             <div className={styles.warningbox}>

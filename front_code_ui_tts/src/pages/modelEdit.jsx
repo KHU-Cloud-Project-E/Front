@@ -17,7 +17,27 @@ const testJson = {
     "share" : false, //공유옵션 활성화 여부
     "ficture_src" : "", //모델 사진 경로
     "detail" : "this is test model" //모델에 대한 상세 설명
-  };
+};
+
+const warnTexts = [
+    "모델을 공유함으로써 발생할 수 있는 모든 저작권에 대한 법적 책임은 본인에게 있음을 동의한다.",
+    "본인이 업로드한 모델을 불특정 다수가 사용할 수 있음을 인지 했고, 이로인해 발생할 수 있는 모든 문제에 대한 책임은 본인에게 있음을 동의한다."
+];
+
+const filledFalse = Array(warnTexts.length).fill(false);
+
+const WarnContent = ({warnText}) => {
+    return(
+        <div className={styles.warnContent}>
+            <div className={styles.warnContentTextBox}>
+                <p>{warnText}</p>
+            </div>
+            <div className={styles.warnContentCkeckbox}>
+
+            </div>
+        </div>
+    );
+}
 
 
 function ModelEdit(){
@@ -30,6 +50,7 @@ function ModelEdit(){
     const [editName, setEditName] = useState(description);
     const [editDetail, setEditDetail] = useState(detail);
     const [overlayShare, setOverlayShare] = useState(false);
+    const [warnChecked, setWarnChecked] = useState(filledFalse);
 
     const handleCopyToClipboard = () => {
         clipboardCopy(modelId);
@@ -138,7 +159,13 @@ function ModelEdit(){
             </div>
             <OverlayWarning isDisplay={overlayShare}
             clickCancle={overlayShareCancel}
-            clickConfirm={overlayShareConfirm} ></OverlayWarning>
+            clickConfirm={overlayShareConfirm} >
+                <div className={styles.warnContentBox}>
+                    {warnTexts.map(wtext => (
+                        <WarnContent warnText={wtext}/>
+                    ))}
+                </div>
+            </OverlayWarning>
         </div>
     );
 
