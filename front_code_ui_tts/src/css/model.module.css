@@ -46,6 +46,14 @@
     height: 42%;
 }
 
+.warnIdBox{
+    width: 100%;
+    height: 100%;
+    font-size: x-large;
+    display: flex;
+    align-items: center;
+}
+
 .modelBtnImg {
     margin-left: 1rem;
     height: 100%;

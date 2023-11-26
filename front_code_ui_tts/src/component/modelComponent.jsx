@@ -4,7 +4,7 @@ import styles from "../css/model.module.css";
 import clipboardCopy from "clipboard-copy";
 import {Tooltip} from 'react-tooltip';
 
-const ModelComponent = ({id, description})=>{
+const ModelComponent = ({id, description, onClickDelete})=>{
 
     const handleCopyToClipboard = () => {
         clipboardCopy(id);
@@ -25,7 +25,8 @@ const ModelComponent = ({id, description})=>{
                     <Tooltip id="copy-tooltip"/>
                 </button>
                 <button data-tooltip-id="delete-tooltip" data-tooltip-content="delete model"
-                data-tooltip-variant="error">
+                data-tooltip-variant="error"
+                onClick={()=>{onClickDelete(id)}}>
                     <img className={styles.modelBtnImg} src="img/delete.png"/>
                     <Tooltip id="delete-tooltip"/>
                 </button>
