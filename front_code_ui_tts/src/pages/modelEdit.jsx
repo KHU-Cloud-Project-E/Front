@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams, redirect } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import styles from '../css/modelEdit.module.css';
@@ -109,8 +109,8 @@ function ModelEdit() {
     const [warnChecked, setWarnChecked] = useState(filledFalse);
     //id refresh에 대한 경고 오버레이
     const [overlayId, setOverlayId] = useState(false);
+    let navigate = useNavigate();
     // 전체 모델 list 페이지로 리다이렉트
-    const [rdhome, setRdhome] = useState(false);
 
 
     //로드가 잘 되었나 확인하는 코드
@@ -216,7 +216,8 @@ function ModelEdit() {
             const response = await axios.patch(baseUrl + '/users/models', dataConfig, saveConfig)
             //setJsonData(response.data.result)
             console.log(response);
-            alert("저장이 완료되었습니다.")
+            alert("저장이 완료되었습니다.");
+            navigate("/model")
         } catch (error) {
             console.error(error)
         }
