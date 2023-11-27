@@ -9,6 +9,7 @@ import ToggleSwitch from "../component/toggleSwitch";
 import CrossElement from "../component/crossElement";
 import GeneralButton from "../component/generalButton";
 import OverlayWarning from "../component/overlay/overlayWarning";
+import { useDropzone } from 'react-dropzone';
 
 const testJson = {
     "status": 200, // 상태
@@ -16,7 +17,7 @@ const testJson = {
     "id": 4123, //모델의 아이디
     "description": "test1", //모델의 이름
     "share" : false, //공유옵션 활성화 여부
-    "ficture_src" : "", //모델 사진 경로
+    "ficture_src" : null, //모델 사진 경로
     "detail" : "this is test model" //모델에 대한 상세 설명
 };
 
@@ -60,6 +61,11 @@ function ModelEdit(){
     const [isEditing, setIsEditing] = useState(false);
     const [isShare, setIsShare] = useState(testJson.share);
     const [editName, setEditName] = useState(description);
+    //이미지 설정 여부
+    const [imgState, setImgState] = useState((testJson.ficture_src === null)?false:true);
+    //드로그 앤 드롭된 이미지를 저장하기 위한 state
+    const [image, setImage] = useState(null);
+    const [imgsrc, setImgsrc] = useState(imgState?testJson.ficture_src:null)
     //디테일 데이터 저장
     const [editDetail, setEditDetail] = useState(detail);
     //공유 옵션 활성화에 대한 경고 오버레이
@@ -87,7 +93,7 @@ function ModelEdit(){
     //공유 경고 오버레이 취소
     const overlayShareCancel = () => {
         setOverlayShare(false);
-    }
+    };
 
     //공유 경고 오버레이 확인
     const overlayShareConfirm = () => {
@@ -104,17 +110,36 @@ function ModelEdit(){
         else{
             alert("모든 약관에 동의해 주세요.");
         }
-    }
+    };
 
     const overlayIdCancel = () => {
         setOverlayId(false);
-    }
+    };
 
     const overlayIdConfirm = () => {
         setOverlayId(false);
 
         alert("ID가 재할당 되었습니다.");
+    };
+
+    const onDrop = (acceptedFiles) => {
+        const reader = new FileReader();
+        const file = acceptedFiles;
+
+        if(file) {
+            reader.readAsDataURL(file[0]);
+            setImage(file[0]);
+            setImgState(true);
+        }
+
+        reader.onload = (e) => {
+            setImgsrc(reader.result);
+            console.log(imgsrc);
+            document.getElementsByName("imageurl")[0].value='';
+        }
     }
+
+    const {getRootProps, getInputProps} = useDropzone({onDrop, accept: 'image/*'});
 
     //맨 밑의 저장 버튼
     const confirmButtonOnClick = () => {
@@ -179,12 +204,26 @@ function ModelEdit(){
                         </div>
                     </div>
                     <div className={styles.modelShareBox}>
-                        <div className={styles.modelPictureBox}>
+                        {/* <div className={styles.modelPictureBox}>
                             <div className={styles.modelPictureCross}>
                                 <CrossElement />
                             </div>
                             <p className={styles.modelPictureText}>사진을 등록해 주세요</p>
-                        </div>
+                        </div> */}
+                        {!imgState?(
+                            <div {...getRootProps()} className={styles.modelPictureBox}>
+                                <div className={styles.modelPictureCross}>
+                                    <CrossElement />
+                                </div>
+                                <p className={styles.modelPictureText}>사진을 등록해 주세요</p>
+                                <input {...getInputProps()} multiple={false} name='imageurl'/>
+                            </div>
+                        ):(
+                            <div {...getRootProps()} className={styles.modelPictureBox}>
+                                <img src = {imgsrc} />
+                                <input {...getInputProps()} multiple={false} name='imageurl'/>
+                            </div>
+                        )}
                         <div className={styles.modelDetailBox}>
                             <textarea
                             className={styles.modelDetailText}
