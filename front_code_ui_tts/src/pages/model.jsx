@@ -83,7 +83,7 @@ function Model(){
                     <h2>모델 리스트</h2>
                 </b>
                 {components.map(component =>(
-                    <ModelComponent id={component.id} description={component.name} onClickDelete={onClickDelete}/>
+                    <ModelComponent id={component.model_id} description={component.name} onClickDelete={onClickDelete}/>
                 ))}
             </div>
             <OverlayWarning
