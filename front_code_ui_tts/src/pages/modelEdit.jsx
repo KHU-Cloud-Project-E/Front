@@ -75,7 +75,7 @@ function ModelEdit() {
         try {
             axios.get(baseUrl + '/users/models/detail', config).then(response => {
                 setJsonData(response.data.result)
-                //console.log(response);
+                console.log(response);
             })
         } catch (error) {
             console.error(error)
@@ -112,19 +112,11 @@ function ModelEdit() {
     let navigate = useNavigate();
     // 전체 모델 list 페이지로 리다이렉트
 
-
-    //로드가 잘 되었나 확인하는 코드
-
-    // console.log(isShare);
-    // console.log(imgsrc);
-    // console.log(editDetail);
-
-    //로잘딱 끝
-
     //로드 한 이후 화면을 한번 더 채워줌
     useEffect(() => {
         setEditName(description);
         setIsShare((components.model_check === 1) ? true : false);
+        setImgState((components.image_url === null) ? false : true);
         setImgsrc(components.image_url);
         setEditDetail(detail);
     }, [components])
@@ -166,14 +158,31 @@ function ModelEdit() {
         }
     };
 
+    //ID 재설정 경고 오버레이 설정
     const overlayIdCancel = () => {
         setOverlayId(false);
     };
 
     const overlayIdConfirm = () => {
         setOverlayId(false);
+        const idConfig = {
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZXcxMjEyQG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzAwOTI3OTY4LCJleHAiOjE3MDEyODc5Njh9.ECu6v3-g3dMOMVO3drUTilXnlVL8ghYH0iifvTdAf6A',
+                'Content-Type': 'application/json',
+            }
+        };
 
-        alert("ID가 재할당 되었습니다.");
+        const dataConfig = {
+            "modelId" : modelId
+        };
+
+        axios.put(baseUrl + '/users/models',dataConfig, idConfig).then(response => {
+            console.log(response);
+            alert("ID가 재할당 되었습니다.");
+            navigate("/model")
+        }).catch(error => {
+            console.log(error);
+        })
     };
 
     // 이미지 드래그 앤 드롭
@@ -199,11 +208,11 @@ function ModelEdit() {
 
     //맨 밑의 저장 버튼
     const confirmButtonOnClick = async () => {
-        const dataConfig = {
+        const saveDataConfig = {
             "model_id": modelId,
             "name": editName,
             "description": editDetail,
-            "share_check": isShare?1:0
+            "share_check": isShare ? 1 : 0
         }
         const saveConfig = {
             headers: {
@@ -211,13 +220,28 @@ function ModelEdit() {
                 'Content-Type': 'application/json',
             }
         };
+        const imgConfig = {
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZXcxMjEyQG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzAwOTI3OTY4LCJleHAiOjE3MDEyODc5Njh9.ECu6v3-g3dMOMVO3drUTilXnlVL8ghYH0iifvTdAf6A',
+                'Content-Type': 'multipart/form-data',
+            }
+        };
         console.log(saveConfig);
         try {
-            const response = await axios.patch(baseUrl + '/users/models', dataConfig, saveConfig)
+            const response = await axios.patch(baseUrl + '/users/models', saveDataConfig, saveConfig);
             //setJsonData(response.data.result)
-            console.log(response);
-            alert("저장이 완료되었습니다.");
-            navigate("/model")
+            //console.log(response);
+            if (imgchan === false) {
+                alert("저장이 완료되었습니다.");
+                navigate("/model");
+            } else {
+                const formData = new FormData();
+                formData.append('file',image);
+                formData.append('modelId',modelId);
+                const responseImg = await axios.patch(baseUrl + '/users/models/image', formData, imgConfig);
+                alert("저장이 완료되었습니다.");
+                navigate("/model");
+            }
         } catch (error) {
             console.error(error)
         }
