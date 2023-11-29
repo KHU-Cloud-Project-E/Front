@@ -6,37 +6,17 @@ import OverlayWarning from "../component/overlay/overlayWarning";
 
 const baseUrl = import.meta.env.VITE_BACK_BASE_URL
 
-const testJson = {
-    "status": 200,
-    "message": "success",
-    "count": 3,
-    "components": [
-      {
-        "id" : 4123,
-        "description" : "test1"
-      },
-      {
-        "id" : 3142,
-        "description" : "test2"
-      },
-      {
-        "id" : 1643,
-        "description" : "test3"
-      }
-    ]
-  };
-
-  
-
+ 
 
 function Model(){
+    const token = localStorage.getItem('token')
   // 데이터 불러오기
     const [components, setJsonData] = useState([]);
 
     // 로그인으로 얻은 auth로 변경하는 코드 나중에 필요함.
     const config = {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZXcxMjEyQG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzAwOTI3OTY4LCJleHAiOjE3MDEyODc5Njh9.ECu6v3-g3dMOMVO3drUTilXnlVL8ghYH0iifvTdAf6A',
+        'Authorization': 'Bearer ' + token,
       }
     };
 

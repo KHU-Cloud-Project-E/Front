@@ -9,6 +9,7 @@ import AppLayout from './AppLayout'
 import ModelEdit from './pages/modelEdit'
 import Gallery from './pages/gallery'
 import Detail from './pages/detail'
+import Signcall from './pages/signcall'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
         <Route path='/model/edit/:id' element={<ModelEdit />} />
         <Route path='/gallery' element={<Gallery />} />
         <Route path='/detail/:id' element={<Detail />} />
+        <Route path='/singin/callback' element={<Signcall/>}/>
       </Route>
     </>
   )

@@ -14,15 +14,6 @@ import { useDropzone } from 'react-dropzone';
 
 const baseUrl = import.meta.env.VITE_BACK_BASE_URL
 
-const testJson = {
-    "status": 200, // 상태
-    "message": "success",
-    "id": 4123, //모델의 아이디
-    "description": "test1", //모델의 이름
-    "share": false, //공유옵션 활성화 여부
-    "ficture_src": null, //모델 사진 경로
-    "detail": "this is test model" //모델에 대한 상세 설명
-};
 
 const warnTexts = [
     "모델을 공유함으로써 발생할 수 있는 모든 저작권에 대한 법적 책임은 본인에게 있음을 동의한다.",
@@ -57,6 +48,7 @@ const WarnContent = ({ warnText, idx, checked, onChange }) => {
 
 
 function ModelEdit() {
+    const token = localStorage.getItem('token');
     let modelId = useParams().id;
     const [components, setJsonData] = useState({});
     //api 불러오기 시작
@@ -64,7 +56,7 @@ function ModelEdit() {
     // 나중에 jwt key 설정 해 줘야함
     const config = {
         headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZXcxMjEyQG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzAwOTI3OTY4LCJleHAiOjE3MDEyODc5Njh9.ECu6v3-g3dMOMVO3drUTilXnlVL8ghYH0iifvTdAf6A',
+            'Authorization': 'Bearer '+token,
         },
         params: {
             'modelId': modelId
@@ -167,7 +159,7 @@ function ModelEdit() {
         setOverlayId(false);
         const idConfig = {
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZXcxMjEyQG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzAwOTI3OTY4LCJleHAiOjE3MDEyODc5Njh9.ECu6v3-g3dMOMVO3drUTilXnlVL8ghYH0iifvTdAf6A',
+                'Authorization': 'Bearer '+token,
                 'Content-Type': 'application/json',
             }
         };
@@ -216,13 +208,13 @@ function ModelEdit() {
         }
         const saveConfig = {
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZXcxMjEyQG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzAwOTI3OTY4LCJleHAiOjE3MDEyODc5Njh9.ECu6v3-g3dMOMVO3drUTilXnlVL8ghYH0iifvTdAf6A',
+                'Authorization': 'Bearer '+token,
                 'Content-Type': 'application/json',
             }
         };
         const imgConfig = {
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZXcxMjEyQG5hdmVyLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzAwOTI3OTY4LCJleHAiOjE3MDEyODc5Njh9.ECu6v3-g3dMOMVO3drUTilXnlVL8ghYH0iifvTdAf6A',
+                'Authorization': 'Bearer '+token,
                 'Content-Type': 'multipart/form-data',
             }
         };
