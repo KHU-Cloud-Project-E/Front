@@ -1,0 +1,88 @@
+.overlaybackground{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: none;
+}
+
+.warningon{
+    display: block;
+    opacity: 0;
+    animation: fadein 0.5s ease-in-out forwards;
+}
+
+.warningoff{
+    opacity: 1;
+    animation: fadeout 0.5s ease-in-out forwards;
+}
+
+@keyframes fadein {
+    from{
+        opacity : 0;
+    }
+    to{
+        opacity : 1;
+    }
+}
+
+@keyframes fadeout {
+    from{
+        opacity : 1;
+    }
+    to{
+        opacity : 0;
+        display: none;
+    }
+}
+
+
+.fog{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: black ;
+    opacity: 0.7;
+}
+
+.warningbox{
+    position: absolute;
+    width: 50rem;
+    height: 35rem;
+    background-color: #BB29FF;
+    border-radius: 1rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+}
+
+.warningtitle{
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+    place-self: center;
+}
+
+.warningshowbox{
+    display: grid;
+    grid-template-rows: 4fr 1fr;
+    width: auto;
+    height: auto;
+    background-color: white;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.buttonbox{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-content: center;
+}
+
+.warningchildrenbox{
+    padding: 1rem;
+}

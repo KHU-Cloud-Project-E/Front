@@ -1,0 +1,61 @@
+.modelBackground{
+    background-color: rgb(217 217 217);
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+}
+
+.models {
+    display: flex;
+    width: 64rem;
+    background-color: rgb(239 239 239);
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5rem;
+    flex-direction: column;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.modelsH {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.model {
+    display: flex;
+    margin-top: 1.5rem;
+    background-color: white;
+    align-items: center;
+    height: 5rem;
+    border-radius: 1rem;
+    box-shadow: 0.2rem 0.2rem 0.3rem rgba(0, 0, 0, 0.5);
+}
+
+.modelText {
+    margin-left: 2rem;
+    font-size: 1.5rem;
+    width: 100%;
+}
+
+.modelImgBox {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 2rem;
+    height: 42%;
+}
+
+.warnIdBox{
+    width: 100%;
+    height: 100%;
+    font-size: x-large;
+    display: flex;
+    align-items: center;
+}
+
+.modelBtnImg {
+    margin-left: 1rem;
+    height: 100%;
+}
