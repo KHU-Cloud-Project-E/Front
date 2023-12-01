@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import axios from 'axios';
 import styles from '../css/model.module.css';
 import ModelComponent from "../component/modelComponent";
@@ -10,6 +11,7 @@ const baseUrl = import.meta.env.VITE_BACK_BASE_URL
 
 function Model() {
   const token = localStorage.getItem('token')
+  let navigate = useNavigate();
   // 데이터 불러오기
   const [components, setJsonData] = useState([]);
 
@@ -24,10 +26,16 @@ function Model() {
     try {
       axios.get(baseUrl + '/users/models', config).then(response => {
         setJsonData(response.data.result.listUserModelDetailDto)
-        //console.log(response);
+        console.log(response);
+      }).catch(error => {
+        //console.error(error.response.data.isSuccess);
+        if(!error.response.data.isSuccess){
+          alert("서비스를 이용하기 전에 로그인을 먼저 해주세요.");
+          navigate("/singin");
+        }
       })
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
