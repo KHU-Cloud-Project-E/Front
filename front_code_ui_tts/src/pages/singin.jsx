@@ -12,7 +12,8 @@ export default function singin() {
   const navigate = useNavigate();
 
   const onClickKakao = () => {
-    const kakaoAuthUrl = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+clientId+"&redirect_uri="+baseUrl+"/oauth2/callback"
+    //const kakaoAuthUrl = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+clientId+"&redirect_uri="+baseUrl+"/oauth2/callback"
+    const kakaoAuthUrl = baseUrl+"/oauth2/authorize/**/kakao"
     window.location.href = kakaoAuthUrl
   }
 

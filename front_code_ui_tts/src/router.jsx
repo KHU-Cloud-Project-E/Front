@@ -22,7 +22,7 @@ const router = createBrowserRouter(
         <Route path='/model/edit/:id' element={<ModelEdit />} />
         <Route path='/gallery' element={<Gallery />} />
         <Route path='/detail/:id' element={<Detail />} />
-        <Route path='/singin/callback' element={<Signcall/>}/>
+        <Route path='/signin/callback' element={<Signcall/>}/>
       </Route>
     </>
   )

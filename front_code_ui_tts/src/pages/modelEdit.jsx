@@ -161,6 +161,9 @@ function ModelEdit() {
             headers: {
                 'Authorization': 'Bearer '+token,
                 'Content-Type': 'application/json',
+            },
+            params: {
+                "modelId" : modelId
             }
         };
 
