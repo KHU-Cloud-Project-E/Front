@@ -15,6 +15,7 @@ import Detail from "./pages/detail";
 import Command from "./pages/commands";
 import Donation from "./pages/donation";
 import Help from "./pages/help";
+import Signcall from "./pages/signcall"
 import MarkdownComp from "../markdown/markdown";
 const router = createBrowserRouter(
   createRoutesFromElements(
