@@ -1,52 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../css/gallery.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../css/gallery.css";
 
-const baseUrl = "api"; // API의 기본 URL을 설정
+// 무한 스크로 구현하느라 이렇게 적었는데 여기에 삭제할거 삭제하고 필요한 json넣으시면 돼요..!
+const testJson = {
+  status: 200,
+  message: "success",
+  count: 30,
+  components: Array(30)
+    .fill(null)
+    .map((_, index) => ({
+      id: index + 1,
+      src: `img/person${(index % 3) + 1}.png`,
+    })),
+};
 
 function Gallery() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // 한 페이지에 로드되는 모델의 개수
+  // 각 페이지에서 로드할 아이템 수
   const limit = 9;
 
-  // 모델의 사진을 불러오는 API
-  const fetchModelImages = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/model-images?page=${page}&limit=${limit}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error at model images:', error);
-      return [];
-    }
-  };
-
-  // 모델의 정보를 불러오는 API
-  const fetchModelDetails = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/model-details?page=${page}&limit=${limit}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error at model details:', error);
-      return [];
-    }
-  };
-
-  const fetchImages = async () => {
+  const fetchImages = () => {
     setIsLoading(true);
-    const modelImages = await fetchModelImages();
-    const modelDetails = await fetchModelDetails();
-    // 사진과 정보를 결합하여 새로운 이미지 목록을 생성
-    const newImages = modelImages.map((image, index) => ({
-      ...image,
-      description: modelDetails[index]?.description || 'No description',
-    }));
-    setImages(prev => [...prev, ...newImages]);
+    const startIndex = (page - 1) * limit;
+    const newImages = testJson.components.slice(startIndex, startIndex + limit);
+    setImages((prev) => [...prev, ...newImages]);
     setIsLoading(false);
   };
 
@@ -56,13 +39,17 @@ function Gallery() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
-        setPage(prev => prev + 1);
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 100 &&
+        !isLoading
+      ) {
+        setPage((prev) => prev + 1);
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isLoading]);
 
   const handleImageClick = (component) => {
@@ -82,8 +69,16 @@ function Gallery() {
       </div>
       <div className="image-grid">
         {images.map((component) => (
-          <div key={component.id} className="image-card" onClick={() => handleImageClick(component)}>
-            <img src={component.src} alt={`Image ${component.id}`} className="model-image" />
+          <div
+            key={component.id}
+            className="image-card"
+            onClick={() => handleImageClick(component)}
+          >
+            <img
+              src={component.src}
+              alt={`Image ${component.id}`}
+              className="model-image"
+            />
             <div className="description">{component.description}</div>
           </div>
         ))}
