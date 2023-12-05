@@ -25,6 +25,7 @@ const router = createBrowserRouter(
         <Route path="/model" element={<Model />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/commands" element={<Command />} />
+        <Route path='/signin/callback' element={<Signcall/>}/>
 
         <Route path="/donation3" element={<Donation />} />
         <Route path="/help" element={<Help />} />
