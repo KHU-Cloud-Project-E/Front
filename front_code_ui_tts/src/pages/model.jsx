@@ -29,9 +29,14 @@ function Model() {
         console.log(response);
       }).catch(error => {
         //console.error(error.response.data.isSuccess);
-        if(!error.response.data.isSuccess){
-          alert("서비스를 이용하기 전에 로그인을 먼저 해주세요.");
-          navigate("/singin");
+        try {
+          if (!error.response.data.isSuccess) {
+            alert("서비스를 이용하기 전에 로그인을 먼저 해주세요.");
+            navigate("/singin");
+          }
+        } catch (error) {
+          alert("서버와의 연결에서 장애가 발생하였습니다.");
+          navigate("/");
         }
       })
     } catch (error) {
