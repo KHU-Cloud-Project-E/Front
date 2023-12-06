@@ -3,10 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import '../css/detail.css';
 
-const baseUrl = "api"; // API의 기본 URL을 설정
+const baseUrl = import.meta.env.VITE_BACK_BASE_URL
 
 const Detail = () => {
-  let { id } = useParams();
+  let { id } = useParams(); 
   let navigate = useNavigate();
   const [imageSrc, setImageSrc] = useState('');
   const [details, setDetails] = useState({
@@ -14,29 +14,31 @@ const Detail = () => {
     text: [],
   });
 
-  // 이미지와 상세 정보를 불러오는 함수
-  const fetchDetails = async () => {
+  const fetchDetails = async (modelId) => {
     try {
-      const response = await axios.get(`${baseUrl}/model-details/${id}`);
-      if (response.status === 200) {
+      const response = await axios.get(`${baseUrl}/models/detail`, {
+        params: { modelId } 
+      });
+      if (response.status === 200 && response.data.isSuccess) {
+        const result = response.data.result;
         setDetails({
-          title: response.data.title,
-          text: response.data.text,
-          imageSrc: response.data.imageSrc,
+          title: result.name,
+          text: result.description ? [result.description] : [], 
+          imageSrc: result.image_url,
         });
-        setImageSrc(response.data.imageSrc);
+        setImageSrc(result.image_url);
       }
     } catch (error) {
       console.error('Error fetching details:', error);
     }
   };
 
-  // 컴포넌트가 마운트될 때 API 호출
   useEffect(() => {
-    fetchDetails();
+    if (id) {
+      fetchDetails(id); 
+    }
   }, [id]);
 
-  // 뒤로가기 함수
   const goBack = () => {
     navigate(-1);
   };
