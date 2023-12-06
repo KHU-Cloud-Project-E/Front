@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/gallery.css';
 
-const baseUrl = "api"; // API의 기본 URL을 설정
+const baseUrl = import.meta.env.VITE_BACK_BASE_URL
 
 function Gallery() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,44 +12,42 @@ function Gallery() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // 한 페이지에 로드되는 모델의 개수
   const limit = 9;
-
-  // 모델의 사진을 불러오는 API
-  const fetchModelImages = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/model-images?page=${page}&limit=${limit}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error at model images:', error);
-      return [];
-    }
-  };
-
-  // 모델의 정보를 불러오는 API
-  const fetchModelDetails = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/model-details?page=${page}&limit=${limit}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error at model details:', error);
-      return [];
-    }
-  };
 
   const fetchImages = async () => {
     setIsLoading(true);
-    const modelImages = await fetchModelImages();
-    const modelDetails = await fetchModelDetails();
-    // 사진과 정보를 결합하여 새로운 이미지 목록을 생성
-    const newImages = modelImages.map((image, index) => ({
-      ...image,
-      description: modelDetails[index]?.description || 'No description',
-    }));
-    setImages(prev => [...prev, ...newImages]);
+  
+
+    const fetchModels = async (lastId = 0, name = '') => {
+      try {
+        const response = await axios.get(`${baseUrl}/models`, {
+          params: { lastId, name }
+        });
+        return response.data.result.listUserModelDetailDto;
+      } catch (error) {
+        console.error('Error at fetching models:', error);
+        return [];
+      }
+    };
+  
+    try {
+      const modelDetails = await fetchModels(page * limit - limit, searchTerm);
+  
+
+      const newImages = modelDetails.map((model) => ({
+        id: model.model_id,
+        src: model.image_url,
+        description: model.description || 'No description',
+      }));
+  
+      setImages(prev => [...prev, ...newImages]);
+    } catch (error) {
+      console.error('Error while fetching images:', error);
+    }
+  
     setIsLoading(false);
   };
-
+  
   useEffect(() => {
     fetchImages();
   }, [page]);
