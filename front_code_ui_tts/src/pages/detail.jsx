@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import '../css/detail.css';
 
-const baseUrl = import.meta.env.VITE_BACK_BASE_URL
+const baseUrl = import.meta.env.VITE_BACK_BASE_URL;
 
 const Detail = () => {
   let { id } = useParams(); 
@@ -43,6 +43,14 @@ const Detail = () => {
     navigate(-1);
   };
 
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(id).then(() => {
+      alert(`모델 ID (${id})가 클립보드에 복사되었습니다.`);
+    }, (err) => {
+      console.error('Could not copy text: ', err);
+    });
+  };
+
   return (
     <div className="detail-container">
       <h1>{details.title}</h1>
@@ -52,7 +60,8 @@ const Detail = () => {
           <p key={index}>{detail}</p>
         ))}
       </div>
-      <button onClick={goBack} className="뒤로가기">Back</button>
+      <button onClick={goBack} className="back-button">Back</button>
+      <button onClick={handleCopyToClipboard} className="back-button">Copy Model ID</button>
     </div>
   );
 };
