@@ -37,7 +37,7 @@ function Gallery() {
       const newImages = modelDetails.map((model) => ({
         id: model.model_id,
         src: model.image_url,
-        description: model.description || 'No description',
+        description: model.name || 'No description',
       }));
   
       setImages(prev => [...prev, ...newImages]);
