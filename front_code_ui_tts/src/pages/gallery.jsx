@@ -1,58 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "../css/gallery.css";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../css/gallery.css';
 
-// 무한 스크로 구현하느라 이렇게 적었는데 여기에 삭제할거 삭제하고 필요한 json넣으시면 돼요..!
-const testJson = {
-  status: 200,
-  message: "success",
-  count: 30,
-  components: Array(30)
-    .fill(null)
-    .map((_, index) => ({
-      id: index + 1,
-      src: `img/person${(index % 3) + 1}.png`,
-    })),
-};
+const baseUrl = import.meta.env.VITE_BACK_BASE_URL;
 
 function Gallery() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const navigate = useNavigate();
 
-  // 각 페이지에서 로드할 아이템 수
   const limit = 9;
 
-  const fetchImages = () => {
+  const fetchModels = async (lastId = 0, name = '') => {
     setIsLoading(true);
-    const startIndex = (page - 1) * limit;
-    const newImages = testJson.components.slice(startIndex, startIndex + limit);
-    setImages((prev) => [...prev, ...newImages]);
-    setIsLoading(false);
+    try {
+      const response = await axios.get(`${baseUrl}/models`, {
+        params: { lastId, name }
+      });
+      setIsLoading(false);
+      return response.data.result.listUserModelDetailDto;
+    } catch (error) {
+      console.error('Error at fetching models:', error);
+      setIsLoading(false);
+      return [];
+    }
+  };
+
+  const fetchImages = async () => {
+    const modelDetails = await fetchModels(page * limit - limit, searchTerm);
+    
+    setHasMore(modelDetails.length === limit);
+
+    const newImages = modelDetails.map(model => ({
+      id: model.model_id,
+      src: model.image_url,
+      description: model.name || 'No description',
+    }));
+
+    setImages(prev => [...prev, ...newImages]);
   };
 
   useEffect(() => {
+    setPage(1);
+    setImages([]);
+    setHasMore(true);
     fetchImages();
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (page > 1) fetchImages();
   }, [page]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-          document.body.offsetHeight - 100 &&
-        !isLoading
-      ) {
-        setPage((prev) => prev + 1);
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading && hasMore) {
+        setPage(prev => prev + 1);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isLoading]);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isLoading, hasMore]);
 
-  const handleImageClick = (component) => {
+  const handleImageClick = component => {
     navigate(`/detail/${component.id}`, { state: { imageSrc: component.src } });
   };
 
@@ -64,21 +78,13 @@ function Gallery() {
           type="text"
           placeholder="Search Model..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
         />
       </div>
       <div className="image-grid">
-        {images.map((component) => (
-          <div
-            key={component.id}
-            className="image-card"
-            onClick={() => handleImageClick(component)}
-          >
-            <img
-              src={component.src}
-              alt={`Image ${component.id}`}
-              className="model-image"
-            />
+        {images.map(component => (
+          <div key={component.id} className="image-card" onClick={() => handleImageClick(component)}>
+            <img src={component.src} alt={`Image ${component.id}`} className="model-image" />
             <div className="description">{component.description}</div>
           </div>
         ))}
