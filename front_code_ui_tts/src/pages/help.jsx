@@ -2,6 +2,52 @@ import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import MarkdownComp from "../../markdown/markdown";
 
+const content1 = [`# 모델 업로드
+
+
+\`\`\`plaintext
+! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
+"! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
+\`\`\`
+
+
+`,
+`# 모델 2
+
+
+\`\`\`plaintext
+! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
+"! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
+\`\`\`
+
+
+`
+]
+
+const content2 = [`# sfsdf
+
+
+\`\`\`plaintext
+! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
+"! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
+\`\`\`
+
+
+`,
+`# asaasa
+
+
+\`\`\`plaintext
+! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
+"! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
+\`\`\`
+
+
+`
+]
+
+const contents = [content1, content2];
+
 const Help = () => {
   const [isActive, setIsActive] = useState(1);
   const [tab, setTab] = useState(7);
@@ -15,29 +61,32 @@ const Help = () => {
       options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
     },
     {
-      title: "step1",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
-    },
-    {
-      title: "step2",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
-    },
-    {
-      title: "step3",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
-    },
-    {
-      title: "step4",
+      title: "colab으로 학습",
       options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
     },
     {
       title: "업로드",
       options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
     },
+    {
+      title: "디스코드 봇 초대 및 사용",
+      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+    },
+    {
+      title: "모델 설정",
+      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+    },
+    {
+      title: "공유 모델 사용",
+      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+    },
   ];
 
+  console.log("isActive = " + isActive + ", Tab = "+tab)
 
-  const markContent = `# 모델 업로드
+  
+
+  const [markContent, setMarkContent] = useState(`# 모델 업로드
 
 
   \`\`\`plaintext
@@ -46,7 +95,12 @@ const Help = () => {
   \`\`\`
 
   
-  `
+  `);
+
+  const onClickMenu = (nux)=>{
+    setMarkContent(contents[tab-1][nux])
+  }
+
   return (
     <div className="min-h-screen bg-[#DDDDDD] w-full ">
       <div className="grid grid-cols-4  h-screen ">
@@ -79,7 +133,7 @@ const Help = () => {
                   <>
                     {item.options?.map((it, nux) => (
                       <div
-                        onClick={() => setIsActive(nux + 1)}
+                        onClick={() => {setIsActive(nux + 1); onClickMenu(nux);}}
                         className={`px-[22px] py-[11px]  text-[18px] font-[500]  hover:bg-[#F1D4FF] cursor-pointer rounded-[10px]  ${
                           isActive == (nux + 1)
                             ? "bg-[#F1D4FF] text-[#000]"
