@@ -1,26 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MarkdownComp from "../../markdown/markdown";
+
+const contents = [
+``,
+`
+# 모델 변경
+## 설명
+모델 id를 입력해 직접 모델을 변경한다
+## 사용법
+
+\`\`\`plaintext
+/setvoice <modelid>
+\`\`\`
+
+## 사용 예시
+
+\`\`\`plaintext
+/setvoice 13124123145123234
+\`\`\`
+`,
+`
+# 매크로 추가
+## 설명
+model id를 편하게 사용할 수 있도록 키워드(매크로)를 등록한다
+## 사용법
+
+\`\`\`plaintext
+/setmacro <macro number> <modelid>
+\`\`\`
+
+## 사용 예시
+
+\`\`\`plaintext
+/setmacro 1 14123145123
+\`\`\`
+`,
+`
+# 매크로를 사용하여 모델 변경
+## 설명
+매크로 키워드를 사용해 모델을 변경한다
+## 사용법
+
+\`\`\`plaintext
+/changevoice <macro number>
+\`\`\`
+
+## 사용 예시
+
+\`\`\`plaintext
+/changevoice 1
+\`\`\`
+`,
+`
+# 매크로 목록 보기
+## 설명
+등록된 매크로를 확인한다
+## 사용법
+
+\`\`\`plaintext
+/getmacro
+\`\`\`
+
+## 사용 예시
+
+\`\`\`plaintext
+/getmacro
+\`\`\`
+`
+]
 
 const Command = () => {
   const [isActive, setIsActive] = useState(1);
 
-  const markContent = `# 모델 변경
-  ## 설명
-  모델 id를 입력해 직접 모델을 변경한다
-  ## 사용법
-
-  \`\`\`plaintext
-  /setmodel <modelid>
-  \`\`\`
-
-  ## 사용 예시
-
-  \`\`\`plaintext
-  /setmodel 13124123145123234
-  \`\`\`
-  
-  `
   return (
     <div className=" bg-[#DDDDDD] w-full ">
       <div className="grid grid-cols-4 ">
@@ -65,7 +117,7 @@ const Command = () => {
         <div className=" pt-[100px] px-[42px] overflow-y-scroll  h-screen w-full col-span-3">
           <div className="bg-[#F5F5F5] min-h-[1300px]  px-[60px] pt-[88px] h-full ">
             {/* <Markdown/> */}
-           <MarkdownComp markdownContent={markContent}/>
+           <MarkdownComp markdownContent={contents[isActive]}/>
       
           </div>
         </div>
