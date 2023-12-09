@@ -118,7 +118,7 @@ const content3 = [
 
 const content4 = [
 `
-#zip 파일로 압축
+# zip 파일로 압축
 ## 파일 용량 줄이기
 exp 파일 내부에는 .pth 확장자를 가진 파일들이 여럿 존재합니다.
 
