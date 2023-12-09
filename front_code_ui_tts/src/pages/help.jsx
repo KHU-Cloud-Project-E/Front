@@ -2,35 +2,35 @@ import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import MarkdownComp from "../../markdown/markdown";
 
-const content1 = [`# 모델 업로드
+const content1 = [`# 소개
+## Youcaloid란?
+디스코드 음성 채팅방에서 여러분들이 원하는 목소리로 말해주는 TTS 기능을 제공하는 디스코드 봇입니다!
+  
+
+## 어떻게 사용하나요?
+메인페이지의 초대 버튼을 클릭해 youcaloid를 디스코드 채팅방에 초대 한 뒤 ttsvoice 라는 텍스트 채팅 채널을 개설하여 해당 채널에 텍스트를 입력하여 사용하실 수 있습니다.
+
+자세한 사항은 아래 설명과 상단 네비게이션 바의 Commands 페이지를 참고해 주세요.
 
 
-\`\`\`plaintext
-! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
-"! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
-\`\`\`
+## 내 목소리는 어떻게 학습시키나요?
+아래 가이드라인을 따라 자신의 목소리를 직접 학습시킬 수 있습니다. 시간과 몸, 그리고 의지만 준비하세요!
 
 
-`,
-`# 모델 2
+## 다른사람의 목소리도 사용할 수 있나요?
+물론입니다! 직접 코드를 공유받거나 gallery 페이지에서 코드를 복사해 사용할 수 있습니다.
 
-
-\`\`\`plaintext
-! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
-"! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
-\`\`\`
-
+다만 다른사람의 목소리를 사용해서 모욕을 주거나 기타 문제가 될만한 행동을 할 시 형사처벌의 대상이 될 수 있으니 주의해 주세요.
 
 `
 ]
 
-const content2 = [`# sfsdf
+const content2 = [`# Mimic Recording Studio 다운로드 및 실행
+## Mimic Recording Studio 다운로드
+다음 링크를 통해 mimic recording studio를 다운로드 받습니다.
 
+> [Mimic Recording Studio 다운로드](https://drive.google.com/file/d/1qWWBVerugPedNvaUbqYqwPhbIvWXnFxN/view?usp=sharing)
 
-\`\`\`plaintext
-! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
-"! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
-\`\`\`
 
 
 `,
@@ -46,39 +46,59 @@ const content2 = [`# sfsdf
 `
 ]
 
-const contents = [content1, content2];
+const content3 = [
+
+]
+
+const content4 = [
+  
+]
+
+const content5 = [
+  
+]
+
+const content6 = [
+  
+]
+
+const content7 = [
+  
+]
+
+const contents = [content1, content2, content3, content4, content5, content6, content7];
 
 const Help = () => {
   const [isActive, setIsActive] = useState(1);
-  const [tab, setTab] = useState(7);
+  const [tab, setTab] = useState(1);
   const data = [
     {
       title: "시작하기",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+      options: ["소개"],
     },
     {
       title: "데이터 셋 준비",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+      options: ["Mimic Recording Studio 다운로드 및 실행", "음성 녹음", "음성 데이터 변환"],
     },
     {
       title: "colab으로 학습",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+      options: ["필요한 데이터 업로드", "절차에 따라 학습", "학습이 완료된 파일 다운로드"],
     },
     {
       title: "업로드",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+      options: ["zip 파일로 압축", "드래그 한 후 드롭"],
     },
     {
       title: "디스코드 봇 초대 및 사용",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+      options: ["youcaloid 봇 초대", "모델 등록 및 사용"],
     },
     {
       title: "모델 설정",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+      options: ["업로드한 모델 관리", "모델 공유 설정"],
     },
     {
       title: "공유 모델 사용",
-      options: ["zip 파일로 압축", "드래그 한 후 드롭", "이메일 입력"],
+      options: ["gallery 항목에서 모델 찾기", "공유된 모델 사용하기"],
     },
   ];
 
@@ -86,16 +106,7 @@ const Help = () => {
 
   
 
-  const [markContent, setMarkContent] = useState(`# 모델 업로드
-
-
-  \`\`\`plaintext
-  ! zip -r exp.zip ~/espnet/egs2/kss/tts1/exp/
-  "! cp -r ~/espnet/egs2/kss/tts1/exp.zip /mnt/c/~~~"
-  \`\`\`
-
-  
-  `);
+  const [markContent, setMarkContent] = useState(contents[0][0]);
 
   const onClickMenu = (nux)=>{
     setMarkContent(contents[tab-1][nux])
