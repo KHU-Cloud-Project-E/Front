@@ -32,6 +32,26 @@ const content2 = [`# Mimic Recording Studio 다운로드 및 실행
 > [Mimic Recording Studio 다운로드](https://drive.google.com/file/d/1qWWBVerugPedNvaUbqYqwPhbIvWXnFxN/view?usp=sharing)
 
 
+## Mimic Recording Studio 실행
+run-server.bat 파일을 실행시켜 서버를 실행시킵니다.
+
+web을 통해 http://127.0.0.1:5000/ 에 접속할 수 있게 됩니다. (이때 반드시 크롬을 통해 접속합니다.)
+
+
+## 녹음 진행
+Mimic Recording Studio 의 화면에 출력되는 절차에 따라 녹음을 진행합니다.
+
+이때 처음 몇번은 녹음이 제대로 진행되지 않을 수 있으니 4번정도 까지는 녹음된 응성을 들어 보세요.
+
+Mimic Recording Studio 에는 약간의 버그가 있어서 5문장 이후로는 녹음이 되지 않을수 도 있기 때문에  2 ~ 3문장을 녹음한 후에 페이지를 새로고침 해주시는게 좋습니다.
+
+
+## 음성 데이터 변환
+녹음이 완료되었으면 다음 절차를 따라 학습이 가능한 데이터로 변환하실 수 있습니다.
+
+1. ㅁㄴㅇㄻㄴㅇㄹ
+2. ㅁㄴㅇㄻㄴㅇㄹ
+3. ㄻㄴㄹㄴㄷㄹ
 
 `,
 `# asaasa
