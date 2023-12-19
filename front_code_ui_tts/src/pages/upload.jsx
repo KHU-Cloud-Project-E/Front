@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import UploadSvg from '../component/uploadsvg';
 import Filesvg from '../component/filesvg';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const backendServerUrl = import.meta.env.VITE_UPLOAD_BASE_URL;
 
 export default function Upload() {
   const [files, setFiles] = useState([]);
   const [modelDescription, setModelDescription] = useState('');
+  const token = localStorage.getItem('token');
+
+  let navigate = useNavigate();
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -29,25 +36,23 @@ export default function Upload() {
 
   // function to handle upload submit
   const handleUploadSubmit = async () => {
-    const backendServerUrl = 'http://15.152.251.45:8080';
 
     try {
       const formData = new FormData();
-      formData.append('file', files[0]);
-      formData.append('modelDescription', modelDescription);
+      formData.append('model', files[0]);
+      formData.append('name', modelDescription);
 
-      const response = await fetch(`${backendServerUrl}/upload-model`, {
-        method: 'POST',
-        body: formData,
-      });
+      const uploadConfig = {
+        headers: {
+            'Authorization': 'Bearer '+token,
+            'Content-Type': 'multipart/form-data',
+        }
+      };
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Model uploaded successfully:', result);
-        
-      } else {
-        console.error('Failed to upload model:', response.statusText);
-      }
+      const response = await axios.post(backendServerUrl + '/upload', formData, uploadConfig);
+      alert("모델 업로드가 완료되었습니다.");
+      navigate("/model")
+      
     } catch (error) {
       console.error('Error during model upload:', error.message);
     }
