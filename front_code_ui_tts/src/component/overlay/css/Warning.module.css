@@ -1,6 +1,7 @@
 .overlaybackground{
     position: fixed;
-    height: 100vh;
+    margin-top: -4rem;
+    height: 120vh;
     width: 100vw;
     display: none;
 }
